@@ -9,6 +9,7 @@ import random
 # NEW IMPORTS FOR SECURITY LOGIC
 from django.utils import timezone 
 from datetime import timedelta
+import threading
 
 def ragister(request):
     if request.method == 'POST':
@@ -36,12 +37,17 @@ def ragister(request):
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user.email, ]
             
-            try:
-                send_mail(subject, message, email_from, recipient_list)
-            except Exception as e:
-                # Fallback for development if email fails
-                print(f"Error sending email: {e}")
-                print(f"OTP is: {otp}") 
+           # --- 2. CHANGE THIS SECTION ---
+            # Send Email in a separate thread (Background Task)
+            email_thread = threading.Thread(
+                target=send_otp_email, 
+                args=(subject, message, email_from, recipient_list)
+            )
+            email_thread.start()
+            
+            # Print OTP to logs as backup (helpful if email fails silently)
+            print(f"OTP for {user.email} is: {otp}") 
+            # ------------------------------
 
             return redirect('verify_otp')
     else:
@@ -52,6 +58,7 @@ def ragister(request):
     }            
     return render(request, 'registration/signup.html', context)
 
+# ... rest of your verify_otp view ...
 def verify_otp(request):
     error_message = None
     MAX_ATTEMPTS = 3
