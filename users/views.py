@@ -6,10 +6,16 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 import random
-# NEW IMPORTS FOR SECURITY LOGIC
+import threading  # <--- CRITICAL: Import threading
 from django.utils import timezone 
 from datetime import timedelta
-import threading
+
+# --- CRITICAL: Define this helper function OUTSIDE the views ---
+def send_otp_email(subject, message, email_from, recipient_list):
+    try:
+        send_mail(subject, message, email_from, recipient_list)
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 def ragister(request):
     if request.method == 'POST':
@@ -26,28 +32,24 @@ def ragister(request):
             # Store user ID, OTP, TIMESTAMP, and ATTEMPTS in session
             request.session['verification_user_id'] = user.id
             request.session['verification_otp'] = otp
-            # Store the current time (used for 5-minute expiry)
             request.session['verification_otp_timestamp'] = str(timezone.now()) 
-            # Initialize attempts counter
             request.session['verification_otp_attempts'] = 0 
 
-            # Send OTP via Email (Rest of the email logic remains the same)
+            # Prepare Email Data
             subject = 'Your Verification OTP'
             message = f'Your OTP for registration is {otp}. Please enter this to complete your signup.'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user.email, ]
             
-           # --- 2. CHANGE THIS SECTION ---
-            # Send Email in a separate thread (Background Task)
+            # --- Send Email in Background Thread ---
             email_thread = threading.Thread(
                 target=send_otp_email, 
                 args=(subject, message, email_from, recipient_list)
             )
             email_thread.start()
             
-            # Print OTP to logs as backup (helpful if email fails silently)
+            # Print OTP to logs as backup
             print(f"OTP for {user.email} is: {otp}") 
-            # ------------------------------
 
             return redirect('verify_otp')
     else:
@@ -58,7 +60,6 @@ def ragister(request):
     }            
     return render(request, 'registration/signup.html', context)
 
-# ... rest of your verify_otp view ...
 def verify_otp(request):
     error_message = None
     MAX_ATTEMPTS = 3
@@ -75,8 +76,7 @@ def verify_otp(request):
     # 2. OTP Expiry Check (5 minutes)
     otp_timestamp = timezone.datetime.fromisoformat(otp_timestamp_str)
     if timezone.now() > otp_timestamp + timedelta(minutes=5):
-        # Clear session for security, forcing re-registration
-        # The user account (is_active=False) remains, but they must start the flow again.
+        # Clear session for security
         if 'verification_user_id' in request.session: del request.session['verification_user_id']
         if 'verification_otp' in request.session: del request.session['verification_otp']
         if 'verification_otp_timestamp' in request.session: del request.session['verification_otp_timestamp']
@@ -85,7 +85,6 @@ def verify_otp(request):
 
     # 3. Rate-Limiting Check (3 attempts max)
     if otp_attempts >= MAX_ATTEMPTS:
-        # Deactivate the account for security
         try:
             user_to_lock = User.objects.get(id=user_id)
             user_to_lock.is_active = False
@@ -100,7 +99,6 @@ def verify_otp(request):
         if 'verification_otp_attempts' in request.session: del request.session['verification_otp_attempts']
 
         return render(request, 'registration/verify_otp.html', {'error': f"Too many incorrect attempts. Your account is temporarily locked. Please try registering again."})
-
 
     if request.method == 'POST':
         entered_otp = request.POST.get('otp')
