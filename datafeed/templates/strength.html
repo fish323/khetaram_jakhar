@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/strength.css' %}">
+    <style>
+        .draggable-row { cursor: move; }
+        .sortable-ghost td { background-color: #e2e8f0; opacity: 0.8; }
+    </style>
+{% endblock %}
+
+{% block title %}
+STRENGTH
+{% endblock %}
+
+{% block content %}
+<div class="bod_style">
+  <div class="h_style">Strength</div> 
+  <div class="container">
+    <div class="card" role="region" aria-label="Member list card">
+      <div class="card-header">
+        <h1>Members</h1>
+      </div>
+
+      <div class="table-area">
+        <div class="table-scroll" role="table" aria-label="member_list">
+          <table class="member-table" role="table" aria-describedby="member_list_caption">
+            <caption id="member_list_caption">Member list</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="col-srno">Sr. No.</th>
+                <th scope="col" class="col-desc">Description</th>
+                <th scope="col" class="col-qty">Quantity</th>
+              </tr>
+            </thead>
+
+            <tbody id="strength-list">
+              {% if mywork %}
+                {% for item in mywork %}
+                <tr class="draggable-row" data-id="{{ item.id }}" tabindex="0">
+                  <td class="col-srno">{{ forloop.counter }}</td>
+                  <td class="col-desc">{{ item.description }}</td>
+                  <td class="col-qty">{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="3">
+                    <div class="empty">No records found.</div>
+                  </td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var el = document.getElementById('strength-list');
+        var sortable = Sortable.create(el, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                var order = sortable.toArray();
+                fetch("{% url 'reorder_strength' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ 'order': order })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data));
+            }
+        });
+    });
+</script>
+{% endblock %}

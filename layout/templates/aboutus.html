@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/aboutus.css' %}">
+{% endblock %}
+
+{% block title %}
+ABOUT US
+{% endblock %}
+
+{% block content %}
+<h1 class="bg">ABOUT US </h1>
+<div class="image-text-container">
+    <img src="{% static 'images/about.jpg' %}" alt="Photo of owner">
+
+    <div class="text_degine">
+        <p>
+            <strong>Kheta Ram Jakhar</strong> is a distinguished <strong>PWD "AA" Class Contractor</strong>, recognized for his expertise in delivering large-scale civil engineering and infrastructure projects. As an "AA" Class registered contractor the highest tier of enlistment with the Public Works Department he holds the distinct qualification to tender for and execute government and private projects of <strong>unlimited value</strong>.
+        </p>
+
+        <p>
+            With years of experience navigating complex construction landscapes, Mr. Jakhar has established a reputation for reliability, technical precision, and timely project delivery. His classification as an "AA" contractor is a testament to his financial stability, extensive technical resources, and a proven track record of successfully completing major infrastructure works.
+        </p>
+
+        <p><strong>Core Expertise:</strong></p>
+
+        <ul>
+            <li><strong>Heavy Civil Infrastructure:</strong> Construction of state highways, district roads, and urban connectivity projects.</li>
+            <li><strong>Government Tendering:</strong> Eligible to bid on high-value government contracts across the state without financial caps.</li>
+            <li><strong>Project Management:</strong> End-to-end execution of turnkey projects, ensuring strict adherence to quality and safety standards.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="footer_style">
+    <h1>This is footer </h1>
+</div>
+
+{% endblock %}

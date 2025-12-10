@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <title>{% block title %}Base{% endblock %}</title>
+    
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+    
+    <div class="brand-container">
+        <p class="h_stylee">M/S. KHETARAM JAKHAR</p>
+        <button class="mobile-menu-btn" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="{% url 'homeview' %}">HOME</a></li>
+          <li><a href="{% url 'aboutusview' %}">ABOUT US</a></li>
+          <li><a href="{% url 'workexpview' %}">WORK EXPERIENCE</a></li>
+          <li><a href="{% url 'equipmentview' %}">EQUIPMENT</a></li>
+          <li><a href="{% url 'strengthview' %}">STRENGTH</a></li>
+          <li><a href="{% url 'photosview' %}">PHOTOS</a></li>
+          <li><a href="{% url 'contactview' %}">CONTACT US</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            toggleBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

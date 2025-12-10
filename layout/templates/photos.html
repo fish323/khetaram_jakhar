@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+ {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/photos.css' %}">
+    {% endblock %}
+
+{% block title %}
+PHOTOS
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="back">PHOTOS</h1>
+
+<div class="gallery">
+    <img src="{% static 'images/road_1.jpg'%}" alt="Image 1">
+    <img src="{% static 'images/road_2.jpg'%}" alt="Image 2">
+    <img src="{% static 'images/road_3.jpg'%}" alt="Image 3">
+    <img src="{% static 'images/road_4.jpg'%}" alt="Image 4">
+    <img src="{% static 'images/road_5.jpg'%}" alt="Image 5">
+    <img src="{% static 'images/road_6.jpg'%}" alt="Image 6">
+    <img src="{% static 'images/road_7.jpg'%}" alt="Image 7">
+    <img src="{% static 'images/road_8.jpg'%}" alt="Image 8">
+    <img src="{% static 'images/road_9.jpg'%}" alt="Image 9">
+    <img src="{% static 'images/road_10.jpg'%}" alt="Image 10">
+    <img src="{% static 'images/road_11.jpg'%}" alt="Image 11">
+    <img src="{% static 'images/road_12.jpg'%}" alt="Image 12">
+    <img src="{% static 'images/road_13.jpg'%}" alt="Image 13">
+    <img src="{% static 'images/road_14.jpg'%}" alt="Image 14">
+    <img src="{% static 'images/road_15.jpg'%}" alt="Image 15">
+    <img src="{% static 'images/road_16.jpg'%}" alt="Image 16">
+    <img src="{% static 'images/road_17.jpg'%}" alt="Image 17">
+    <img src="{% static 'images/road_18.jpg'%}" alt="Image 18">
+    <img src="{% static 'images/road_19.jpg'%}" alt="Image 19">
+    <img src="{% static 'images/road_20.jpg'%}" alt="Image 20">
+    <img src="{% static 'images/road_21.jpg'%}" alt="Image 21">
+    <img src="{% static 'images/road_22.jpg'%}" alt="Image 22">
+    <img src="{% static 'images/road_23.jpg'%}" alt="Image 23">
+    <img src="{% static 'images/road_24.jpg'%}" alt="Image 24">
+</div>
+
+
+
+
+
+
+
+{% endblock %}

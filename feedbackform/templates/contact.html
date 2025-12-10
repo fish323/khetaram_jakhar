@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+
+{% block title %}
+Contact Us & Feedback
+{% endblock %}
+
+
+{% block content %}
+<div class="main-container">
+
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-cards-container">
+        
+        <div class="contact-card">
+            <div class="card-header">
+                <h3>Executive</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> Kheta Ram Jakhar</p>
+                <p><strong>Role:</strong> Chairman</p>
+                <p><strong>Mobile:</strong> <a href="tel:+91 9799293643">+91 9799293643</a></p>
+                <p><strong>Email:</strong> <a href="mailto:khetaramjakhad@gmail.com">khetaramjakhad@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="card-header">
+              <h3>Senior Management</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> Rahul Jakhar</p>
+                <p><strong>Role:</strong> Vise Chairman</p>
+                <p><strong>Mobile:</strong> <a href="tel:+91 7357383643">+91 7357383643</a></p>
+                <p><strong>Email:</strong> <a href="mailto:rahuljakhar56@gmail.com">rahuljakhar56@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-cards-container">
+
+        <div class="contact-card">
+            <div class="card-header">
+              <h3>Manager</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> Jagu Ram Jani</p>
+                <p><strong>Role:</strong> Manager</p>
+                <p><strong>Mobile:</strong> <a href="tel:+91 9799549167">+91 9799549167</a></p>
+                <p><strong>Email:</strong> <a href="mailto:jaguram749@gmail.com">jaguram749@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="card-header">
+              <h3>Engineer</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> Vikas Jakhar</p>
+                <p><strong>Role:</strong> Engineer</p>
+                <p><strong>Mobile:</strong> <a href="tel:+91 7976578491">+91 7976578491</a></p>
+                <p><strong>Email:</strong> <a href="mailto:vikashkumarjakhar9680@gmail.com">vikashkumarjakhar9680@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="form-section-wrapper">
+        <h2 class="section-title">Submit Your Feedback</h2>
+        <div class="form-box">
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <div class="form-grid">
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error-msg">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="submit-btn">Add Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="recent-feed-section">
+        <h2 class="section-title">Recent Feedbacks</h2>
+        
+        {% if recent_feedback %}
+            <div class="feed-list">
+                {% for feed in recent_feedback %}
+                <div class="feed-item">
+                    <div class="feed-header">
+                        <span class="feed-name">{{ feed.name }}</span>
+                        <span class="feed-district">({{ feed.district }})</span>
+                    </div>
+                    <div class="feed-body">
+                        <p>{{ feed.massage }}</p> 
+                    </div>
+                    <div class="feed-footer">
+                        <small>Contact details kept private for user security.</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="text-align: center;">No feedback available yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

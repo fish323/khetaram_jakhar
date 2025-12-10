@@ -1,0 +1,144 @@
+/* --- Global Resets --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Prevent horizontal scroll on small screens */
+    overflow-x: hidden; 
+}
+
+/* Ensure images never overflow their container */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Brand Header --- */
+.brand-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #f4f7fb;
+    position: relative;
+}
+
+.h_stylee {
+    text-align: center;
+    font-size: 2rem; /* Responsive unit */
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 900;
+    color: rgb(22, 48, 88);
+    margin: 0;
+}
+
+/* --- Navigation Bar --- */
+.navbar {
+    background-color: #333333;
+    width: 100%;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Flexbox for desktop layout */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Wraps items if screen is slightly narrow */
+}
+
+.nav-links li {
+    /* No float needed with flexbox */
+}
+
+.nav-links li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 20px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.nav-links li a:hover {
+    background-color: #111111;
+}
+
+/* --- Mobile Menu Button (Hidden on Desktop) --- */
+.mobile-menu-btn {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mobile-menu-btn .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+/* --- Content Wrapper --- */
+.content-wrapper {
+    /* Ensures content doesn't touch edges on mobile */
+    max-width: 100%;
+    overflow-x: hidden; 
+}
+
+/* --- RESPONSIVE DESIGN (Mobile) --- */
+@media (max-width: 768px) {
+    .h_stylee {
+        font-size: 1.5rem; /* Smaller title on mobile */
+        text-align: left;
+        margin-right: 40px; /* Space for hamburger */
+    }
+
+    .brand-container {
+        justify-content: flex-start; /* Align logo left */
+    }
+
+    /* Show hamburger button */
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    /* Stack navigation vertically */
+    .nav-links {
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        width: 100%;
+        background-color: #333;
+    }
+
+    /* The class 'active' is added via JS when clicked */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #444;
+    }
+
+    .nav-links li a {
+        padding: 15px;
+        width: 100%;
+    }
+}

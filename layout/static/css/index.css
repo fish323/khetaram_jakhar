@@ -1,0 +1,111 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:linear-gradient(135deg,#7c3aed 0%,#06b6d4 100%);
+  --glass: rgba(255,255,255,0.06);
+  --text:#e6eef8;
+  --muted:#9fb0c8;
+}
+
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(55, 65, 81, 0.7), transparent), var(--bg);
+  color:var(--text);
+  padding: 15px; /* Base padding */
+}
+
+.top_style{
+    text-align: center;
+    color: white;
+    font-size: 2rem; /* Responsive size */
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 200;
+    margin-bottom: 20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:28px;
+}
+
+/* Intro text */
+.hero{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius:14px;
+  padding:25px;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+  flex-wrap: wrap; /* Allow wrapping */
+}
+
+.hero .left{flex:1; min-width: 250px;}
+.hero h2{margin-bottom:6px; font-size: 1.5rem;}
+.hero p{color:var(--muted);font-size:14px}
+
+/* Gallery grid */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Bigger min width */
+  gap:18px;
+}
+
+/* Card */
+.card{
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  min-height:200px;
+  background:var(--card);
+  cursor:pointer;
+  transition:transform .45s cubic-bezier(.2,.9,.2,1), box-shadow .45s;
+  border:1px solid rgba(255,255,255,0.03);
+}
+
+.card img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .9s;
+}
+
+.overlay{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  padding:14px;
+  background: linear-gradient(180deg, rgba(2,6,23,0) 0%, rgba(2,6,23,0.85) 100%);
+  opacity: 1; /* Always visible for better UX */
+}
+
+.title{font-weight:600;margin-bottom:6px; color: white;}
+.desc{font-size:13px;color:var(--muted)}
+
+.badge{
+  position:absolute;top:12px;left:12px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;
+  background:var(--glass);backdrop-filter: blur(4px);border:1px solid rgba(255,255,255,0.04);
+}
+
+/* Mobile Tweaks */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .top_style {
+        font-size: 1.5rem;
+    }
+    /* Disable complex hover animations on mobile for performance */
+    .card:hover {
+        transform: none; 
+    }
+}

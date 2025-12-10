@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Please enter your details to sign in.</p>
+        </div>
+
+        <form action="" method="post" class="auth-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="helptext">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="errorlist">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-submit">Login</button>
+            <input type="hidden" name="next" value="{% url 'homeview' %}">
+        </form>
+
+        <div class="auth-footer">
+    <p><a href="{% url 'password_reset' %}" style="color: #cbd5e1; text-decoration: none;">Forgot Password?</a></p>
+    
+    <p style="margin-top: 5px;">Don't have an account? <a href="{% url 'ragister' %}">Sign up for free</a></p>
+</div>
+    </div>
+</div>
+{% endblock %}

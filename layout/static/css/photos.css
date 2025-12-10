@@ -1,0 +1,27 @@
+.back{
+    background-color: rgb(54, 50, 50);
+    color: rgb(232, 236, 242);
+    text-align: center;
+}
+
+/* Gallery container */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;                 /* space between images */
+    padding: 15px;
+}
+
+/* Gallery images */
+.gallery img {
+    width: 100%;
+    height: 200px;            /* makes gallery uniform */
+    object-fit: cover;        /* crops image nicely */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.gallery img:hover {
+    transform: scale(1.05);
+}

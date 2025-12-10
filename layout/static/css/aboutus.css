@@ -1,0 +1,49 @@
+.bg{
+    background-color: rgb(54, 50, 50);
+    color: rgb(232, 236, 242);
+    text-align: center;
+}
+
+.text_degine{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: x-large;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+
+.footer_style{
+    text-align: center;
+    background-color: rgb(25, 13, 13);
+    border: 8px solid rgb(41, 13, 13);
+    border-radius: 12px;
+}
+
+.image-text-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;              /* space between image & text */
+    padding: 20px;
+}
+
+/* Image style (optional) */
+.image-text-container img {
+    width: 40%;            /* reduce size on big screens */
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .image-text-container {
+        flex-direction: column;     /* Stack items on mobile */
+        text-align: center;
+    }
+
+    .image-text-container img {
+        width: 100%;                /* full width on mobile */
+        max-width: 100%;
+    }
+}

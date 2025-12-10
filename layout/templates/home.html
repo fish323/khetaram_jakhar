@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+    {% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="top_style">
+    WEL COME TO HOME 
+</div>
+<div class="container">
+
+    <section class="hero">
+      <div class="left">
+        <h2>Featured places — work gallery</h2>
+        <p>Here is some images from our work place </p>
+      </div>
+      <div style="min-width:220px;text-align:right;color:var(--muted);font-size:13px">
+        <strong style="display:block">
+          {% if user.is_authenticated %}
+                Hi, {{ user.username }}
+                
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; color:inherit; cursor:pointer; text-decoration:underline; padding:0;">
+                        Logout
+                    </button>
+                </form>
+
+            {% else %}
+                <a href="{% url 'login' %}"> Login here</a>
+                <span> | </span>
+                <span><a href="{% url 'ragister' %}"> Register </a></span>
+            {% endif %}
+              </strong>
+      </div>
+    </section>
+
+    <main class="grid" aria-live="polite">
+
+      <!-- CARD 1 -->
+      <article class="card" tabindex="0" role="article" aria-label="Mist-shrouded Forest">
+        <div class="badge">Forest</div>
+        <img src="{% static 'images/home2.jpg' %}" alt="Mist-shrouded green forest with sunlight" loading="lazy">
+        <div class="overlay">
+          <div class="title">Mist-shrouded Forest</div>
+          <div class="desc">Ancient trees and winding trails — perfect for quiet exploration.</div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="card" tabindex="0" role="article" aria-label="Neon Cityscape">
+        <div class="badge">City</div>
+        <img src="{% static 'images/home2.jpg' %}" alt="Vibrant neon-lit city at night" loading="lazy">
+        <div class="overlay">
+          <div class="title">Neon Cityscape</div>
+          <div class="desc">Skylines, lights and late-night energy — the modern urban pulse.</div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="card" tabindex="0" role="article" aria-label="Desert Dunes">
+        <div class="badge">Desert</div>
+        <img src="{% static 'images/home6.jpg' %}" alt="Golden undulating desert dunes" loading="lazy">
+        <div class="overlay">
+          <div class="title">Desert Dunes</div>
+          <div class="desc">Golden sands and endless horizons — serenity in warm tones.</div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="card" tabindex="0" role="article" aria-label="Icy Mountain Peak">
+        <div class="badge">Mountain</div>
+        <img src="{% static 'images/home5.jpg' %}" alt="Snow-capped mountain peak with clear sky" loading="lazy">
+        <div class="overlay">
+          <div class="title">Icy Mountain Peak</div>
+          <div class="desc">Crisp air and panoramic views — a challenge for every hiker.</div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="card" tabindex="0" role="article" aria-label="Coastal Cliffs">
+        <div class="badge">Coast</div>
+        <img src="{% static 'images/home4.jpg' %}" alt="Dramatic coastal cliffs and turquoise water" loading="lazy">
+        <div class="overlay">
+          <div class="title">Coastal Cliffs</div>
+          <div class="desc">Waves below and winds above — dramatic views for daydreamers.</div>
+        </div>
+      </article>
+
+      <!-- CARD 6 -->
+      <article class="card" tabindex="0" role="article" aria-label="Hidden Waterfall">
+        <div class="badge">Waterfall</div>
+        <img src="{% static 'images/home3.jpg' %}" alt="Hidden waterfall in a lush canyon" loading="lazy">
+        <div class="overlay">
+          <div class="title">Hidden Waterfall</div>
+          <div class="desc">A secret plunge pool tucked away from the busy world.</div>
+        </div>
+      </article>
+
+
+      <article class="card" tabindex="0" role="article" aria-label="Hidden Waterfall">
+        <div class="badge">Waterfall</div>
+        <img src="{% static 'images/home2.jpg' %}" alt="Hidden waterfall in a lush canyon" loading="lazy">
+        <div class="overlay">
+          <div class="title">Hidden Waterfall</div>
+          <div class="desc">A secret plunge pool tucked away from the busy world.</div>
+        </div>
+      </article>
+
+
+
+      <article class="card" tabindex="0" role="article" aria-label="Hidden Waterfall">
+        <div class="badge">Waterfall</div>
+        <img src="{% static 'images/home1.jpg' %}" alt="Hidden waterfall in a lush canyon" loading="lazy">
+        <div class="overlay">
+          <div class="title">Hidden Waterfall</div>
+          <div class="desc">A secret plunge pool tucked away from the busy world.</div>
+        </div>
+      </article>
+
+    </main>
+
+
+{% endblock %}

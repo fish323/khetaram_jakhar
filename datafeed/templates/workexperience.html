@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/workexperience.css' %}">
+    <style>
+        .draggable-row { cursor: move; }
+        .sortable-ghost td { background-color: #e2e8f0; opacity: 0.8; }
+    </style>
+{% endblock %}
+
+{% block title %}
+WORK EXPERIENCE
+{% endblock %}
+
+{% block content %}
+<div class="bod_style">
+<div class="h_style">Work Experience</div> 
+<div class="wrap">
+    <div class="card" role="region" aria-label="Client list card">
+      <header class="card-header">
+        <h2>Client Projects</h2>
+      </header>
+
+      <div class="table-wrap">
+        <div class="table-scroll" role="table" aria-label="client_list">
+          <table class="client-table" role="table" aria-describedby="client_list_caption">
+            <caption id="client_list_caption">Client_list</caption>
+           
+           
+            <thead>
+              <tr>
+                <th scope="col" class="col-client">Client Name</th>
+                <th scope="col" class="col-work">Type of work</th>
+                <th scope="col" class="col-site">Site</th>
+                <th scope="col" class="col-date">Start Year</th>
+                <th scope="col" class="col-date">End Year</th>
+                <th scope="col" class="col-value">Value (Cr.)</th>
+              </tr>
+            </thead>
+
+            <tbody id="work-list">
+              {% if mywork %}
+                {% for item in mywork %}
+                <tr class="draggable-row" data-id="{{ item.id }}" tabindex="0">
+                  <td class="col-client">
+                    <strong>{{ item.client_name }}</strong>
+                    </a>
+                  </td>
+
+                  <td class="col-work">
+                    {{ item.type_of_work }}
+                  </td>
+
+                  <td class="col-site">
+                    {{ item.site }}
+                  </td>
+
+                  <td class="col-date">
+                    {% if item.start_from %}
+                      {{ item.start_from }} 
+                    {% else %}
+                      <span class="muted">—</span>
+                    {% endif %}
+                  </td>
+
+                  <td class="col-date">
+                    {% if item.end_at %}
+                      {{ item.end_at }}
+                    {% else %}
+                      <span class="muted">—</span>
+                    {% endif %}
+                  </td>
+
+                 <td class="col-value">
+                    {% if item.value %}
+                      <strong>₹ {{ item.value_in_crores }} Cr</strong>
+                    {% else %}
+                      <span class="muted">—</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var el = document.getElementById('work-list');
+        var sortable = Sortable.create(el, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                var order = sortable.toArray();
+                fetch("{% url 'reorder_work' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ 'order': order })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data));
+            }
+        });
+    });
+</script>
+{% endblock %}
