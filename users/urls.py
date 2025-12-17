@@ -17,6 +17,10 @@ urlpatterns = [
     # New URL for OTP Verification
     path('verify_otp/', views.verify_otp, name='verify_otp'),
 
+    # --- NEW: WhatsApp URLs ---
+    path('whatsapp-login/', views.whatsapp_login, name='whatsapp_login'),
+    path('whatsapp-verify/', views.whatsapp_verify, name='whatsapp_verify'),
+    
     # --- Password Reset Patterns ---
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html'

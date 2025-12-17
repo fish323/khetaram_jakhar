@@ -9,6 +9,7 @@ import random
 import threading  # <--- CRITICAL: Import threading
 from django.utils import timezone 
 from datetime import timedelta
+from twilio.rest import Client  # <--- IMPORT THIS
 
 # --- CRITICAL: Define this helper function OUTSIDE the views ---
 def send_otp_email(subject, message, email_from, recipient_list):
@@ -125,3 +126,61 @@ def verify_otp(request):
             error_message = f"Invalid OTP. You have {attempts_remaining} attempts remaining."
 
     return render(request, 'registration/verify_otp.html', {'error': error_message})
+
+
+# --- NEW WHATSAPP LOGIC BELOW ---
+
+def whatsapp_login(request):
+    if request.method == 'POST':
+        phone_number = request.POST.get('phone_number')
+        
+        # 1. Generate 6-digit OTP
+        otp = str(random.randint(100000, 999999))
+        
+        # 2. Store in Session
+        request.session['whatsapp_otp'] = otp
+        request.session['whatsapp_phone'] = phone_number
+        
+        # 3. Send via Twilio
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        
+        try:
+            message = client.messages.create(
+                body=f"Your Login OTP is: {otp}",
+                from_=settings.TWILIO_SANDBOX_NUMBER,
+                to=f"whatsapp:{phone_number}"
+            )
+            return redirect('whatsapp_verify')
+        except Exception as e:
+            return render(request, 'registration/whatsapp_login.html', {'error': str(e)})
+            
+    return render(request, 'registration/whatsapp_login.html')
+
+def whatsapp_verify(request):
+    phone_number = request.session.get('whatsapp_phone')
+    session_otp = request.session.get('whatsapp_otp')
+    
+    if not phone_number:
+        return redirect('whatsapp_login')
+
+    if request.method == 'POST':
+        entered_otp = request.POST.get('otp')
+        
+        if entered_otp == session_otp:
+            # OTP Correct: Clean up session
+            if 'whatsapp_otp' in request.session: del request.session['whatsapp_otp']
+            
+            # Get or Create User based on Phone Number
+            # We use the phone number as the username
+            user, created = User.objects.get_or_create(username=phone_number)
+            
+            # Log them in
+            login(request, user)
+            return redirect('homeview') # Redirect to your home page
+        else:
+            return render(request, 'registration/whatsapp_verify.html', {
+                'error': 'Invalid OTP Code', 
+                'phone': phone_number
+            })
+
+    return render(request, 'registration/whatsapp_verify.html', {'phone': phone_number})

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}WhatsApp Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>WhatsApp Login</h2>
+            <p>Enter your WhatsApp number to receive an OTP.</p>
+        </div>
+
+        <div style="background-color: #f0fdf4; border: 1px solid #25D366; padding: 10px; margin-bottom: 15px; border-radius: 5px; font-size: 0.9em; color: #14532d;">
+            <strong>First time?</strong><br>
+            If you are using the Twilio Sandbox, you must join first.<br>
+            <a href="https://wa.me/14155238886?text=join%20probably-company" target="_blank" style="color: #25D366; font-weight: bold; text-decoration: underline;">
+                Click here to Join Sandbox
+            </a>
+            (Replace 'join probably-company' with your actual code)
+        </div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="phone">Mobile Number:</label>
+                <input type="text" name="phone_number" required placeholder="+919876543210" class="form-control" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                <small class="helptext">Include country code (e.g., +91)</small>
+            </div>
+
+            <button type="submit" class="btn-submit" style="background-color: #25D366;">Send OTP</button>
+        </form>
+        
+        {% if error %}
+        <div style="color: red; margin-top: 10px; text-align: center;">{{ error }}</div>
+        {% endif %}
+
+        <div class="auth-footer">
+            <p><a href="{% url 'login' %}">Back to Regular Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

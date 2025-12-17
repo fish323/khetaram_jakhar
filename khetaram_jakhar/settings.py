@@ -155,3 +155,16 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 # -----------------------------------------------------------------
+
+
+# khetaram_jakhar/settings.py
+
+# ... (Keep all existing code) ...
+
+# --- TWILIO WHATSAPP CONFIGURATION ---
+# Replace these with your actual keys from Twilio Console
+TWILIO_ACCOUNT_SID = 'AC83a3beb24a30fb8c0cde99ce557ca8c3'  # Your Account SID
+TWILIO_AUTH_TOKEN = '75f37c55a95c0e2331c9f74094aade4b'    # Your Auth Token
+# The Sandbox number (usually whatsapp:+14155238886)
+TWILIO_VERIFY_SERVICE_SID = 'VAf3718ecaa309d98f3d6fe0207e62c65a'
+TWILIO_SANDBOX_NUMBER = 'whatsapp:+14155238886'

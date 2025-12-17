@@ -39,11 +39,19 @@
             <input type="hidden" name="next" value="{% url 'homeview' %}">
         </form>
 
+        <div style="margin-top: 15px; text-align: center;">
+            <p style="margin-bottom: 5px; color: #666; font-size: 0.9em;">Or</p>
+            <a href="{% url 'whatsapp_login' %}" style="text-decoration: none;">
+                <button type="button" style="width: 100%; padding: 10px; background-color: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Login via WhatsApp
+                </button>
+            </a>
+        </div>
         <div class="auth-footer">
-    <p><a href="{% url 'password_reset' %}" style="color: #cbd5e1; text-decoration: none;">Forgot Password?</a></p>
-    
-    <p style="margin-top: 5px;">Don't have an account? <a href="{% url 'ragister' %}">Sign up for free</a></p>
-</div>
+            <p><a href="{% url 'password_reset' %}" style="color: #cbd5e1; text-decoration: none;">Forgot Password?</a></p>
+            
+            <p style="margin-top: 5px;">Don't have an account? <a href="{% url 'ragister' %}">Sign up for free</a></p>
+        </div>
     </div>
 </div>
 {% endblock %}
