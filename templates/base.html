@@ -49,6 +49,12 @@
             });
         });
     </script>
+<script>
+    // 1. Disable Right Click (Optional)
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
+    // 2. Disable Dragging
+    document.ondragstart = function() { return false; };
+</script>
 </body>
 </html>
